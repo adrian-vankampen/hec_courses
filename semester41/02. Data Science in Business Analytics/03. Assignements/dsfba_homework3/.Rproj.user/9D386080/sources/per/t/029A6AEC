@@ -1,0 +1,24 @@
+{
+    "id": "029A6AEC",
+    "path": "~/Dropbox/teaching/data_science/lectures_2020b/dsfba_homework/dsfba_homework3/scripts/setup.R",
+    "project_path": "scripts/setup.R",
+    "type": "r_source",
+    "hash": "4171604213",
+    "contents": "",
+    "dirty": false,
+    "created": 1603279864332.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "cursorPosition": "33,4",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1603282533,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1603282533801,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,15 @@
+book_filename: "bookdown_demo"
+
+before_chapter_script: "scripts/setup.R"
+
+# new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+  "report/intro.Rmd",
+  "report/literature.Rmd",
+  "report/method.Rmd",
+  "report/application.Rmd",
+  "report/summary.Rmd",
+  "report/references.Rmd"
+]

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#-----------------------\n### Exercise 1\n#-----------------------\n\n\nUSComp <- read.csv(\"01. USComp.csv\")\nattach(USComp)\nn <- 50\n\n#A\n\nplot(Employees, Profits)\n\nAnswer_A <- \"The plot does not seem to show any correlation between profits and number of employees, or perhaps a slight positive correlation.\"\n\n#B\n\ncorr <- cor(Employees, Profits)\n\nt_value <- corr / sqrt((1-corr^2)/(n-2))\n\nalpha_t <- pt(t_value, df=48, lower.tail=FALSE)*2\n\nAnswer_B <- \"The correlation is not statistically significative to a 5% size (alpha_t = 0.0094 < 0.05).\"\n\n#C\n\nlm.out <- lm(Profits ~ Employees)\n\nsummary(lm.out)\nb0 <- coef(summary(lm.out))[\"(Intercept)\",\"Estimate\"]\nb1 <- coef(summary(lm.out))[\"Employees\",\"Estimate\"]\ns1 <- coef(summary(lm.out))[\"Employees\", \"Std. Error\"]\n\nabline(lm.out)\n\nAnswer_C_1 <- \"Profits_i = 2557 + 0.0047*Employees_i + epsilon_i\"\nAnswer_C_2 <- \"A company with 0 employees would make 2557 units of profit according to this model.\"\nAnswer_C_3 <- \"Every additional employee that the company hires adds 0.0047 units of profit according to this model.\"\nAnswer_C_4 <- \"The slope coefficient is significant at alpha = 1% (showed by the ** in the summary)\"\n\n#D\n\nProfits_predicted <- c(coef(summary(lm.out))[\"(Intercept)\",\"Estimate\"] + coef(summary(lm.out))[\"Employees\",\"Estimate\"]*Employees)\nProfits_squared_errors <- c((Profits - Profits_predicted)^2)\nSSE <- sum(Profits_squared_errors)\n\nProfits_mean <- mean(Profits)\nProfits_squared_dif <- c((Profits - Profits_mean)^2)\nSST <- sum(Profits_squared_dif)\nSSR1 <- SST - SSE\n\nProfits_squared_regression <- c((Profits_predicted - Profits_mean)^2)\nSSR2 <- sum(Profits_squared_regression)\n\nR_squared <- SSR2 / SST\nUnexplained <- SSE/SST\nAnswer_D <- \"Using SSR, SSE and SST, we can see that there is a large part of differences in profits that the model does not explain (86.8%)\"\n\n#E\n\nMean_employees <- mean(Employees)\nMean_profits_predicted <- b0 + b1*Mean_employees\n\nCI_Profits_lower <- Mean_profits_predicted - Mean_employees*(1.96*s1)/sqrt(n)\nCI_Profits_upper <- Mean_profits_predicted + Mean_employees*(1.96*s1)/sqrt(n)\n\n#F\n\nAnswer_F <- \"No, this indicator does not seem to be a good indicator for profits. We can try to regress Profits on each type of other data that we have:\"\n\nLM_Assets <- lm(Profits ~ Assets)\nplot(Assets, Profits)\nabline(LM_Assets)\n\nAnswer_F_2 <- \"Assets does not seem to correlate with profits either.\"\n\nLM_earningsps <- lm(Profits ~ Earnings_per_share)\nplot(Earnings_per_share, Profits)\nabline(LM_earningsps)\n\nsummary(LM_earningsps)\n\nAnswer_F_3 <- \"Earnings per share neither...\"\n\nLM_marketv <- lm(Profits ~ Market_Value)\nplot(Market_Value, Profits)\nabline(LM_marketv)\n\nsummary(LM_marketv)\n\nAnswer_F_4 <- \"Market value however seems to correlate pretty well with profits, which seems logical.\"\n\n\nLM_revenue <- lm(Profits ~ Revenues)\nplot(Revenues, Profits)\nabline(LM_revenue)\n\nsummary(LM_revenue)\n\nAnswer_F_5 <- \"As do revenues...\"\n\nLM_stockeq <- lm(Profits ~ Stockholders_Equity)\nplot(Stockholders_Equity, Profits)\nabline(LM_stockeq)\n\nsummary(LM_stockeq)\n\nAnswer_F_6 <- \"and stockholder equity\"\n\n\nLM_return97 <- lm(Profits ~ Total_Return_to_Investors_1997)\nplot(Total_Return_to_Investors_1997, Profits)\nabline(LM_return97)\n\nsummary(LM_return97)\n\nAnswer_F_7 <- \"Finally, the 1997 record for return to investors does not seem to be a good indicator.\"",
+    "created" : 1600178170059.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "978346354",
+    "id" : "F484F2F0",
+    "lastKnownWriteTime" : 1600185908,
+    "last_content_update" : 1600185908621,
+    "path" : "~/HEC/4e année (MScM-BA)/1st semester/01. Quantitative Methods for Management/02. Exercices 2020/Week 1/Exercise 1.R",
+    "project_path" : "Exercise 1.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

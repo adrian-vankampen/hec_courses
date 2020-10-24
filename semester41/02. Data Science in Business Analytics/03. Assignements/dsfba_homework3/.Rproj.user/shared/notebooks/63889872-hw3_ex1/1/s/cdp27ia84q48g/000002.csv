@@ -1,0 +1,4 @@
+"0","abalone <- read_csv(file = here::here(""data/abalone.csv""))"
+"2","Error in guess_header_(datasource, tokenizer, locale) : 
+  Cannot read file C:/Users/Adrian van Kampen/OneDrive/Documents/HEC/4e ann<U+00E9>e (MScM-BA)/1st semester/02. Data Science in Business Analytics/03. Assignements/dsfba_homework3/data/abalone.csv: La syntaxe du nom de fichier, de répertoire ou de volume est incorrecte.
+"

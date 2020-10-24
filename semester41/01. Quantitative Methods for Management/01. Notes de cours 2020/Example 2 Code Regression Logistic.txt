@@ -1,0 +1,70 @@
+#######################Loading Data
+
+library(caret)
+
+data(GermanCredit)
+
+######Defining Complex model: Model 1
+mod_fit_one <- glm(Class ~ Age + ForeignWorker + Property.RealEstate + Housing.Own + 
+                     CreditHistory.Critical, data=GermanCredit, family="binomial")
+
+######Defining Simpler model: Model 2
+mod_fit_two <- glm(Class ~ Age + ForeignWorker, data=GermanCredit, family="binomial")
+
+library(lmtest)
+lrtest(mod_fit_one, mod_fit_two)
+
+######Computing Pseudo-R^2
+library(pscl)
+pR2(mod_fit_one)
+pR2(mod_fit_two)
+
+###########################################################
+############Estimating the global model predicting accuracy
+###########################################################
+
+Train <- createDataPartition(GermanCredit$Class, p=0.6, list=FALSE)
+training <- GermanCredit[ Train, ]
+testing <- GermanCredit[ -Train, ]
+
+mod_fit <- train(Class ~ Age + ForeignWorker + Property.RealEstate + Housing.Own + CreditHistory.Critical,  
+data=training, method="glm", family="binomial")
+
+pred = predict(mod_fit, newdata=testing)
+accuracy <- table(pred, testing[,"Class"])
+accuracy
+sum(diag(accuracy))/sum(accuracy)
+
+###########################################################
+############Estimating the individual model predicting accuracy
+###########################################################
+
+library(pROC)
+# Compute AUC for predicting Class with the variable CreditHistory.Critical
+f1 = roc(Class ~ Housing.Own, data=training) 
+f2 = roc(Class ~ Age, data=training) 
+plot(f1, col="red")
+lines(f2, col="blue")
+
+
+###########################################################
+############Estimating the overall model predicting accuracy
+###########################################################
+
+
+library(ROCR)
+# Compute AUC for predicting Class with the model
+prob <- predict(mod_fit_one, newdata=testing, type="response")
+pred <- prediction(prob, testing$Class)
+perf <- performance(pred, measure = "tpr", x.measure = "fpr")
+plot(perf)
+auc <- performance(pred, measure = "auc")
+auc <- auc@y.values[[1]]
+auc
+
+###########################################################
+############Confidence Interval
+###########################################################
+
+confint.default(mod_fit_one)
+

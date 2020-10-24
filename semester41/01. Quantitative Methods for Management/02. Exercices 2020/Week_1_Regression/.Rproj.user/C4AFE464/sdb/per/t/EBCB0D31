@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1600181096760.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "EBCB0D31",
+    "lastKnownWriteTime" : 13229757704831081,
+    "last_content_update" : 1600181096760,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "15061B0D",
+        "caption" : "USComp",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=USComp&cache_key=15061B0D",
+        "displayedObservations" : 50,
+        "environment" : "",
+        "object" : "USComp",
+        "preview" : 0,
+        "totalObservations" : 50,
+        "variables" : 9
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

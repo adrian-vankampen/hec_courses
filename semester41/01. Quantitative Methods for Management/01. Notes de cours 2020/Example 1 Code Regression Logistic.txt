@@ -1,0 +1,15 @@
+#################Developing a scatterplot
+
+plot(Age, CHD, main="Scatterplot", col=4, lwd=4)
+
+
+#################Developing a plot with Age Group
+
+plot(Age_Group, Percent_with_CHD, main="Scatterplot", col=4, lwd=4, ylim=c(0,1))
+
+
+########################Developing a logistic regression model
+
+mymodel <- glm(CHD ~ Age,family=binomial (link='logit'))
+summary(mymodel)
+

@@ -1,0 +1,74 @@
+
+#####################
+#####################
+### PCA
+#####################
+#####################
+
+library(FactoMineR)
+
+######Selecting Correct Age for the Study, Eliminating Group Effect
+mypcadatainuse <- mypcaexample[-c(1:30),2:7]
+
+#####################Variance Covariance Matrix
+cov(mypcadatainuse)
+
+PCA(mypcadatainuse)
+
+summary(PCA(mypcadatainuse))
+
+###variance from each variable (appears also in the summary)
+PCA(mypcadatainuse)$eig
+
+### variable factor map
+PCA(mypcadatainuse)$var$coord
+
+### individual factor map
+summary(PCA(mypcadatainuse))
+
+###############Screeplot Husson
+screeplot(princomp(mypcadatainuse), type='lines')
+
+#####################
+#####################
+### Factor Analysis
+#####################
+#####################
+
+n.factors <- 2  
+
+myfactofit <- factanal(mypcadatainuse, 
+                n.factors,                # number of factors to extract
+                rotation="none")
+
+print(myfactofit, digits=2, cutoff=.3, sort=TRUE)
+
+
+n.factors <- 3  
+
+myfactofit <- factanal(mypcadatainuse, 
+                n.factors,                # number of factors to extract
+                rotation="none")
+
+print(myfactofit, digits=2, cutoff=.3, sort=TRUE)
+
+
+n.factors <- 3  
+
+myfactofitvarimax <- factanal(mypcadatainuse, 
+                n.factors,                # number of factors to extract
+                rotation="varimax")
+
+print(myfactofitvarimax, digits=2, cutoff=.3, sort=TRUE)
+
+print(myfactofit, digits=2, cutoff=.3, sort=TRUE)
+
+
+myfactofitpromax <- factanal(mypcadatainuse, 
+                n.factors,                # number of factors to extract
+                rotation="promax")
+
+print(myfactofitvarimax, digits=2, cutoff=.3, sort=TRUE)
+
+print(myfactofitpromax, digits=2, cutoff=.3, sort=TRUE)
+
