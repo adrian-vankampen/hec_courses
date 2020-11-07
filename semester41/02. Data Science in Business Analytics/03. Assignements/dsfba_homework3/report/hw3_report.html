@@ -412,7 +412,7 @@ summary {
 
 <h1 class="title toc-ignore">Homework 3 - Report</h1>
 <h4 class="author">Name I, First Name I and Name II, First Name II</h4>
-<h4 class="date">21 October, 2020</h4>
+<h4 class="date">29 October, 2020</h4>
 
 </div>
 
@@ -443,6 +443,7 @@ summary {
 <pre><code>## Warning: package &#39;knitr&#39; was built under R version 4.0.3</code></pre>
 <pre><code>## Warning: package &#39;kableExtra&#39; was built under R version 4.0.3</code></pre>
 <pre><code>## Warning: package &#39;bookdown&#39; was built under R version 4.0.3</code></pre>
+<pre><code>## Warning: package &#39;rmarkdown&#39; was built under R version 4.0.3</code></pre>
 <p>Let’s first load a dataset:</p>
 <pre class="r"><code>abalone &lt;- read_csv(file = here::here(&quot;data/abalone.csv&quot;))</code></pre>
 <div id="wrangling" class="section level3">
@@ -503,6 +504,16 @@ summary {
 4               516               31.5
 5               205               21.0
 # … with 4,172 more rows</code></pre></li>
+</ol>
+<pre class="r"><code>
+transmute_abalone &lt;- transmute(abalone, 
+                               whole_weight_in_mg = whole_weight * 1000,
+                               water_weight = 1000*(
+                                  whole_weight-
+                                     shucked_weight-
+                                     viscera_weight-
+                                     shell_weight))</code></pre>
+<ol start="6" style="list-style-type: decimal">
 <li><p>Extract a tibble <code>first_1000_rank</code> of dimension 1000 x 3, which contains the <code>diameter</code>, <code>rings</code> and <code>rings_rank</code> columns, sorted by ascending <code>rings_rank</code>, which is a column containing the rank corresponding to the value of the <code>rings</code> variable. Then, select the three columns and rank on the <code>rings</code> and filter for the rows corresponding to the first 1000 <code>rings_rank</code>.</p>
 <p>To check your answer:</p>
 <p>The output of <code>print(first_1000_rank, n = 5)</code> is</p>

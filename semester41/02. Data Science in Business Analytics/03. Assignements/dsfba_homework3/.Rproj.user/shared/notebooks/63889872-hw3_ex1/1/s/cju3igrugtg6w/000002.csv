@@ -1,4 +1,0 @@
-"0","source(here::here(""scripts/setup.R""))"
-"2","package 'here' was built under R version 4.0.3"
-"2","Error in .f(.x[[i]], ...) : there is no package called 'gghighlight'
-"

@@ -33,12 +33,11 @@ abalone <- read_csv(file = here::here("data/abalone.csv"))
    # … with 1,211 more rows
    ```
    
-```{r}
-length_sex_ring <- abalone %>% 
-  filter(length > 0.6) %>% 
-  select(sex, diameter, height, rings) %>%
-  arrange(sex) %>%
-  arrange(desc(ring))
+```{r, echo = TRUE}
+length_sex_ring <- abalone %>%
+   filter(length > 0.6) %>%
+   select(sex, diameter, height, rings) %>%
+   arrange(sex, desc(rings))
 ```
 
 2. Extract a tibble `count_prop` of dimension 3 x 3,
@@ -59,9 +58,11 @@ length_sex_ring <- abalone %>%
    3 M      1528 0.366
    ```
    
-   ```{r}
-   ## Your code goes here
-   ```
+```{r, echo = TRUE}
+count_prop <- group_by(abalone, sex) %>%  # Group by sex
+   summarize(count = n()) %>%             # Summarize the nb. of obs.
+   mutate(prop = count/sum(count))        # Finds the proportion of each obs. group
+```
 
 3. Extract a tibble `mean_max_min` of dimension 3 x 4, which contains the
    `sex`, `weight_mean`, `weight_max` and `weight_min` columns.
@@ -81,9 +82,12 @@ length_sex_ring <- abalone %>%
    3 M           0.433      1.35      0.0065
    ```
    
-   ```{r}
-   ## Your code goes here
-   ```
+```{r, echo = TRUE}
+mean_max_min <- group_by(abalone, sex) %>% 
+   summarize(weight_mean = mean(shucked_weight), 
+             weight_max = max(shucked_weight), 
+             weight_min = min(shucked_weight))
+```
    
 4. Extract a tibble `filter_na` of dimension 2963 x 10,
    which contains all columns. The dataset should be filtered for diameter
@@ -109,9 +113,12 @@ length_sex_ring <- abalone %>%
    #   shell_weight <dbl>
    ```
    
-   ```{r}
-   ## Your code goes here
-   ```
+```{r, echo = TRUE}
+filter_na <- filter(abalone, (is.na(diameter) | diameter > 0.36)) %>%
+   rename(index = X) %>%
+   select(index, sex, length, diameter, rings, everything())
+   
+```
    
 5. Extract a tibble `transmute_abalone` of dimension 4177 x 2,
    which contains the `whole_weight_in_mg` and `water_weight_in_mg` columns,
@@ -134,9 +141,16 @@ length_sex_ring <- abalone %>%
    # … with 4,172 more rows
    ```
    
-   ```{r}
-   ## Your code goes here
-   ```
+```{r, echo = TRUE}
+
+transmute_abalone <- transmute(abalone, 
+                               whole_weight_in_mg = whole_weight * 1000,
+                               water_weight = 1000*(
+                                  whole_weight-
+                                     shucked_weight-
+                                     viscera_weight-
+                                     shell_weight))
+```
    
 6. Extract a tibble `first_1000_rank` of dimension 1000 x 3,
    which contains the `diameter`, `rings` and `rings_rank` columns, sorted
@@ -161,9 +175,12 @@ length_sex_ring <- abalone %>%
    # … with 995 more rows
    ```
    
-   ```{r}
-   ## Your code goes here
-   ```
+```{r}
+first_1000_rank <- arrange(abalone, rings) %>%
+   mutate(rings_rank = c(1:length(rings))) %>%
+   select(diameter, rings, rings_rank) %>%
+   filter(rings_rank <= 1000)
+```
    
 7. Extract a tibble `n_distinct_rings_by_sex` of dimension 3 x 2,
    which contains the `sex` and `distinct_rings` columns.
@@ -183,17 +200,19 @@ length_sex_ring <- abalone %>%
    3 M                 24
    ```
    
-   ```{r}
-   ## Your code goes here
-   ```
+```{r}
+n_distinct_rings_by_sex <- group_by(abalone, sex) %>%
+   summarize(distinct_rings = n_distinct(rings))
+```
   
 ### Visualization
 
 8. Draw a density plot of `rings`, colored by `sex`.
   
-   ```{r}
-   ## Your code goes here
-   ```
+```{r}
+group_by(abalone, sex)%>%
+   ggplot(aes(x=rings, fill=sex)) + geom_histogram()
+```
   
 9. Draw a histogram of the `diameter` with `binwidth` as 0.05,
    filled and faceted by `sex`.
